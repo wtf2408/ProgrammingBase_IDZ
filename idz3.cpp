@@ -2,10 +2,15 @@
 
 using namespace std;
 
+void main()
+{
+    task3();
+}
+
 void task3()
 {
     // дана матрица, получить одномерный массив, эл. которого равен сред. ариф. строки, если оно больше 10, иначе 0.
-    
+
     int matrix[10][10], n, m, resultArray[10];
     cout << "enter row count: "; 
     cin >> n;
