@@ -16,53 +16,91 @@ struct Node
         next = nullptr;
         prev = nullptr;
     };
+    Node* add(int number)
+    {
+        next = new Node;
+        next->prev = this;
+        next->num = number;
+        return next;
+    }
 };
 
-Node* GetList();
+void fillList(Node* head);
 void printList(Node* el);
 
 
 int main()
 {
-    Node* h1 = GetList();
-    Node* h2 = GetList();
+    bool start = true;
+    Node* h1 = new Node;
+    Node* h2 = new Node;
+    fillList(h1);
+    fillList(h2);
+    
+    Node* res = new Node;
+    Node* head = res;
 
-    printList(h1); cout << endl;
-    printList(h2); cout << endl;
+    printList(h1); 
+    cout << endl;
+    printList(h2); 
+    cout << endl;
 
     while (h1 != nullptr || h2 != nullptr)
     {
         if (h1 == nullptr) 
         {
-            printList(h2);
-            break;
+            if(start)
+            {
+                start = !start;
+                res->num = h2->num;
+            } else {
+            res = res->add(h2->num);
+            h2 = h2->next;}
         }
         else if (h2 == nullptr) 
         {
-            printList(h2);
-            break;
+            if(start)
+            {
+                start = !start;
+                res->num = h1->num;
+            } else {
+            res = res->add(h1->num);
+            h1 = h1->next;}
         }
-        if (h1->num < h2->num)
+        else if (h1->num < h2->num)
         {
-            cout << h1->num << " ";
-            h1 = h1->next;
+            if(start)
+            {
+                start = !start;
+                res->num = h1->num;
+                h1 = h1->next;
+            }
+            else {res = res->add(h1->num);
+            h1 = h1->next;}
         }
         else {
-            cout << h2->num << " ";
-            h2 = h2->next;
+            if(start)
+            {
+                start = !start;
+                res->num = h2->num;
+                h2 = h2->next;
+            }
+            else {
+            res = res->add(h2->num);
+            h2 = h2->next; }
         }
         
     }
+    printList(head);
     return 0;
 }
 
-Node* GetList()
+void fillList(Node* head)
 {
     cout << "Enter a sorted list : ";
     int num; 
     cin >> num;
     bool start = true;
-    Node* head = new Node();
     Node* pointer = head;
 
     while (num != 0)
@@ -84,8 +122,6 @@ Node* GetList()
         }
         cin >> num;
     };
-
-    return head;
 }
 
 void printList(Node* el)
